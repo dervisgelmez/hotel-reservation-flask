@@ -470,6 +470,7 @@ button:focus {
   background: #fff;
   top: 0;
   top: -50px;
+  z-index: 2;
   -webkit-transform: translateY(50px);
   -ms-transform: translateY(50px);
   transform: translateY(50px);
@@ -515,7 +516,7 @@ button:focus {
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 800px;
+  min-height: 300px;
 }
 
 .overlay {

@@ -467,7 +467,7 @@ button:focus {
 /*----------------------------------------------------*/
 /*============= Start banner_area css =============*/
 .banner_area {
-  background: #04091e;
+  background: #000;
   min-height: 800px;
   position: relative;
   z-index: 1;
