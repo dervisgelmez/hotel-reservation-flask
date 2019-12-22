@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+{% block body %}
+    <section class="banner_area">
+        <div class="booking_table d_flex align-items-center">
+        </div>
+        <div class="hotel_booking_area position">
+            <div class="container">
+                {% include 'app/sections/reservation-card.html' %}
+            </div>
+        </div>
+    </section>
+    {% include 'app/sections/about-us.html' %}
+    {% include 'app/sections/review.html' %}
+    {% include 'app/sections/blog.html' %}
+{% endblock %}
