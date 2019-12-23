@@ -14,7 +14,7 @@
                         <div class="book_tabel_item">
                             <div class="form-group">
                                 <div class='input-group date'>
-                                    <input type='text' name="place" class="form-control" placeholder="Örn. Malatya"/>
+                                    <input type='text' name="place" class="form-control place" placeholder="Örn. Malatya" autocomplete="off"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </span>
@@ -35,10 +35,10 @@
 
                              <div class="input-group">
                                 <select class="wide" name="room">
-                                    <option data-display="Tek kişilik oda" value="1">Tek kişilik oda</option>
+                                    <option data-display="Tümü" value="4">Tümü</option>
+                                    <option value="1">Tek kişilik oda</option>
                                     <option value="2">Çift kişilik oda</option>
                                     <option value="3">Aile odaları</option>
-                                    <option value="4">Diğer</option>
                                 </select>
                             </div>
                         </div>
@@ -63,3 +63,22 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<script>
+    /*
+    $.ajax({
+        type: "POST",
+        url: '',
+        data: {},
+        success: function (data)
+        {
+            //gelen sonuc
+            alert(data);
+        },
+    });*/
+</script>

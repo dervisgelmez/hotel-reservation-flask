@@ -15,7 +15,7 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">Hakkımızda</a></li>
                     <li class="nav-item"><a class="nav-link" href="accomodation.html">Konaklama</a></li>
                     <li class="nav-item"><a class="nav-link" href="gallery.html">Galeri</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">İletişim</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">İletişim</a></li>
                     <li class="nav-item"><span class="nav-link" href="#">|</span></li>
                     {% if session.login %}
                         <li class="nav-item"><span class="nav-link">{{ session.name }}</span></li>

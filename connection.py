@@ -26,6 +26,10 @@ def check_user(mail):
         }
     return user
 
+def get_areas():
+    return "q"
+
+
 def create_user(user):
     c = con.cursor()
     record = [user['fname'], user['lname'], user['pass'], user['email'],'user']

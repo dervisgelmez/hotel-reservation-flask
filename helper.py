@@ -2,14 +2,6 @@ from flask import *
 import connection as db
 import hashlib
 
-def find_reservation(request):
-    place = request.form['place']
-    room = request.form['room']
-    checkin = request.form['checkin']
-    checkout = request.form['checkout']
-    myvar = request.form
-    return myvar
-
 def is_user(mail,password):
     user = db.is_user(mail, md5hasher(password))
     session_set(user)
@@ -29,6 +21,14 @@ def create_user(request):
         db.create_user(user)
         message = {'type':'success','message':'Kullanici basarili bir sekilde olusturuldu.'}
     return message
+
+def find_reservation(request):
+    place = request.form['place']
+    room = request.form['room']
+    checkin = request.form['checkin']
+    checkout = request.form['checkout']
+    myvar = request.form
+    return myvar
 
 def session_set(array):
     for key in array:

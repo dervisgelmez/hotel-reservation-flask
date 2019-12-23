@@ -1,6 +1,7 @@
 from flask import *
 from datetime import date
 import helper
+import connection as db
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ def index():
 
 @app.route("/reservation", methods=['POST'])
 def reservation():
+    return render_template("app/reservation.html")
     return helper.find_reservation(request)
 
 
@@ -52,6 +54,15 @@ def signup():
         return render_template("app/index.html", alert=message)
     else:
         return page_not_found(404)
+
+
+
+
+
+
+@app.route("/contact")
+def contact():
+    return render_template("app/contact.html")
 
 
 
