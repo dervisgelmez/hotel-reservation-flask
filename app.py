@@ -10,17 +10,10 @@ app = Flask(__name__)
 def index():
     return render_template("app/index.html")
 
-
-
-
 @app.route("/reservation", methods=['POST'])
 def reservation():
-    return render_template("app/reservation.html")
-    return helper.find_reservation(request)
-
-
-
-
+    hotels = helper.find_reservation(request)
+    return render_template("app/reservation.html", hotels=hotels)
 
 @app.route("/login", methods=['POST','GET'])
 def login():
@@ -32,20 +25,10 @@ def login():
         return page_not_found(404)
     return render_template("app/index.html")
 
-
-
-
-
-
 @app.route("/logout", methods=['POST','GET'])
 def logout():
     helper.session_clear()
     return render_template("app/index.html")
-
-
-
-
-
 
 @app.route("/signup", methods=['POST','GET'])
 def signup():
@@ -55,28 +38,52 @@ def signup():
     else:
         return page_not_found(404)
 
-
-
-
-
-
 @app.route("/contact")
 def contact():
     return render_template("app/contact.html")
 
+@app.route("/basket")
+def basket():
+    return render_template("app/basket.html")
+
+@app.route("/add-to-basket", methods=['GET'])
+def add_to_basket():
+    helper.add_to_basket(request)
+    return render_template("app/basket.html")
+
+@app.route("/user")
+def user():
+    return render_template("app/contact.html")
+
+@app.route("/basket-clear")
+def basket_clear():
+    basket = {'basket','h_id','h_area_code','h_title','h_address','h_attributes','r_id','r_title','r_attributes','r_price','r_rank','h_location'}
+    helper.session_unset(basket)
+    return render_template("app/index.html")
 
 
 
+
+
+@app.route("/admin")
+@app.route("/admin.html")
+def admin():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    return render_template("admin/index.html")
+
+@app.route("/admin/hotel")
+def a_hotel():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    hotels = db.get_all_hotels()
+    return render_template("admin/hotel.html", hotels = hotels)
 
 @app.errorhandler(404)
 def page_not_found(error):
    return render_template('404.html')
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.secret_key = helper.md5hasher(str(date.today()))

@@ -23,12 +23,12 @@ def create_user(request):
     return message
 
 def find_reservation(request):
-    place = request.form['place']
-    room = request.form['room']
-    checkin = request.form['checkin']
-    checkout = request.form['checkout']
-    myvar = request.form
-    return myvar
+    date = {
+        'checkin':request.form['checkin'],
+        'checkout':request.form['checkout']
+    }
+    session_set(date)
+    return db.get_hotels(request.form['place'], request.form['room'])
 
 def session_set(array):
     for key in array:
@@ -40,8 +40,26 @@ def session_get(key):
     else:
         return "none"
 
+def session_unset(array):
+    for key in array:
+        if key in session:
+            session.pop(key)
+
 def session_clear():
     session.clear()
+
+
+def add_to_basket(request):
+    basket = {
+        'hotel_id' : request.args.get("hotel"),
+        'room_id' : request.args.get("room"),
+        'client_id': session_get('user_id'),
+        'checkin': session_get('checkin'),
+        'checkout' :session_get('checkout')
+    }
+    data = db.get_basket(basket)
+    session_set(data)
+
 
 def md5hasher(data):
     md5hash = hashlib.md5()

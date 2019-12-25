@@ -1,0 +1,32 @@
+{% extends 'admin/base.html' %}
+{% block body %}
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Otel Adı</th>
+                <th scope="col">Konumu</th>
+                <th scope="col">Adresi</th>
+                <th scope="col">Özellikleri</th>
+                <th scope="col">Oy</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0,hotels|length) %}
+            <tr>
+                <th scope="row">{{ hotels[i]['id'] }}</th>
+                <td>{{ hotels[i]['title'] }}</td>
+                <td>{{ hotels[i]['h_location'] }}</td>
+                <td>{{ hotels[i]['address'] }}</td>
+                <td>{{ hotels[i]['attributes'] }}</td>
+                <td>{{ hotels[i]['vote'] }}</td>
+                <th scope="col"><a href=""><i class="fa fa-pencil"></i></a></th>
+                <th scope="col"><a href=""><i class="fa fa-close"></i></a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ url_for('static', filename='image/favicon.png') }}" type="image/png">
+    <title>{% block title %} Page Title {% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <!-- main css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/simple-sidebar.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+
+<div class="d-flex" id="wrapper">
+    {% include 'admin/leftbar.html' %}
+    <div id="page-content-wrapper">
+        {% include 'admin/menu.html' %}
+        <div class="container-fluid">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+</div>
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+</body>
+</html>
