@@ -26,7 +26,7 @@
                         <div class="book_tabel_item">
                             <div class="form-group">
                                 <div class='input-group date' id='datetimepicker11'>
-                                    <input type='text' name="checkin" class="form-control" placeholder="Giriş Tarihi"/>
+                                    <input type='text' name="checkin" class="form-control check_in" placeholder="Giriş Tarihi"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                     </span>
@@ -47,7 +47,7 @@
                         <div class="book_tabel_item">
                             <div class="form-group">
                                 <div class='input-group date' id='datetimepicker1'>
-                                    <input type='text' name="checkout" class="form-control" placeholder="Çıkış Tarihi"/>
+                                    <input type='text' name="checkout" class="form-control check_out" placeholder="Çıkış Tarihi"/>
                                     <span class="input-group-addon">
                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                     </span>
@@ -70,8 +70,14 @@
 
 
 <script>
-    $("#book_now_btn").on("click",function () {
-        alert("a");
-        return false;
+    $(".book_now_btn").on("click",function () {
+        var place = $("input.place").val();
+        var check_in = $("input.check_in").val();
+        var check_out = $("input.check_out").val();
+        if (place==="" || check_in==="" || check_out==="")
+        {
+            alert("Lütfen tüm alanları doldurunuz.");
+            return false;
+        }
     })
 </script>

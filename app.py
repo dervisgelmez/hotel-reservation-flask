@@ -94,7 +94,8 @@ def admin():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
         return page_not_found(404)
-    return render_template("admin/index.html")
+    data = db.admin_home_static()
+    return render_template("admin/index.html",data=data)
 
 @app.route("/admin/hotel")
 def a_hotel():

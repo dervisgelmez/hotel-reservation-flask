@@ -242,4 +242,46 @@ def get_all_users():
         users.append(user)
     return users
 
+def admin_home_static():
+    user = totalUser()
+    hotel = totalHotel()
+    reservation = totalReservation()
+    total = {
+        'user': user['total'],
+        'hotel': hotel['total'],
+        'reservation': reservation['total'],
+
+    }
+    return total
+
+def totalUser():
+    user = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT COUNT(*) FROM client")
+    for row in c:
+        user = {
+            'total': str(row[0]),
+        }
+    return user
+
+def totalHotel():
+    hotel = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT COUNT(*) FROM hotel")
+    for row in c:
+        hotel = {
+            'total': str(row[0]),
+        }
+    return hotel
+
+def totalReservation():
+    result = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT COUNT(*) FROM reservation")
+    for row in c:
+        result = {
+            'total': str(row[0]),
+        }
+    return result
+
 
