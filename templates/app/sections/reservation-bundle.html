@@ -1,8 +1,7 @@
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color">Special Accomodation</h2>
-            <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+            <h2 class="title_color">Özel Seçilen Oteller</h2>
         </div>
         <div class="row mb_30">
             <div class="col-lg-3 col-sm-6">
@@ -65,12 +64,32 @@
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color">Normal Accomodation</h2>
-            <p>We all live in an age that belongs to the young at heart. Life that is becoming extremely fast,</p>
+            <h2 class="title_color">Oteller ve Odaları</h2>
         </div>
         <div class="row accomodation_two">
             {% for i in range(0,hotels|length) %}
-                <div class="col-md-12"><h3>{{  hotels[i]['title'] }}</h3></div>
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{  hotels[i]['img'] }}" class="card-img" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h1 class="card-title">{{  hotels[i]['title'] }}</h1>
+                                    <p class="card-text">{{  hotels[i]['address'] }}</p>
+                                    <p class="card-text">
+                                        {% set list1 = hotels[i]['attributes'].split(',') %}
+                                        {% for item in list1  %}
+                                            <span class="btn btn-sm btn-primary">{{ item }}</span>
+                                        {% endfor %}
+                                    </p>
+                                    <p class="card-text"><small class="text-muted">{{  hotels[i]['vote'] }} / 5</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% for j in range(0,hotels[i]['rooms']|length) %}
                     <div class="col-lg-3 col-sm-6">
                         <div class="accomodation_item text-center">

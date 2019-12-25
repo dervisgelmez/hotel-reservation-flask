@@ -15,6 +15,11 @@ def reservation():
     hotels = helper.find_reservation(request)
     return render_template("app/reservation.html", hotels=hotels)
 
+
+@app.route("/about")
+def about():
+    return render_template("app/aboutus.html")
+
 @app.route("/login", methods=['POST','GET'])
 def login():
     if request.method=='POST':
@@ -61,8 +66,13 @@ def basket_clear():
     helper.session_unset(basket)
     return render_template("app/index.html")
 
-
-
+@app.route("/reservation/create")
+def create_reservation():
+    if helper.session_get('basket'):
+        helper.create_reservation()
+        return basket_clear()
+    else:
+        return page_not_found(404)
 
 
 @app.route("/admin")
@@ -79,7 +89,27 @@ def a_hotel():
     if (roles != "admin"):
         return index()
     hotels = db.get_all_hotels()
-    return render_template("admin/hotel.html", hotels = hotels)
+    areas = db.get_all_areas()
+    return render_template("admin/hotel.html", hotels = hotels, areas=areas)
+
+@app.route("/admin/hotel", methods=['POST'])
+def add_hotel():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    if request.method=='POST':
+        helper.add_hotel(request)
+        return a_hotel()
+    else:
+        return page_not_found(404)
+
+@app.route("/admin/hotel/delete")
+def delete_hotel():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    helper.delete_hotel(request)
+    return a_hotel()
 
 @app.errorhandler(404)
 def page_not_found(error):

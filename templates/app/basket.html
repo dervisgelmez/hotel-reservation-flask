@@ -23,6 +23,7 @@
                                 <img src="image/blog/main-blog/m-blog-1.jpg" alt="">
                                 <div class="blog_details">
                                     <a href="#"><h2>{{ session.h_title }} Otel</h2></a>
+                                    <p><img src="{{ session.h_img }}" alt=""></p>
                                     <p>
                                         {{ session.h_address }}
                                         <br><br>
@@ -60,7 +61,7 @@
                     </aside>
                     <div class="br"></div>
                     <aside class="single_sidebar_widget author_widget">
-                        <a href="#" class="view_btn button_hover complete_basket">Tamamla</a>
+                        <a href="{{ url_for('create_reservation') }}" class="view_btn button_hover complete_basket">Tamamla</a>
                         <a href="{{ url_for('basket_clear') }}" class="view_btn button_hover">Sepeti Boşalt</a>
                     </aside>
                 </div>

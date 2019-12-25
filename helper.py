@@ -30,6 +30,17 @@ def find_reservation(request):
     session_set(date)
     return db.get_hotels(request.form['place'], request.form['room'])
 
+def create_reservation():
+    reservartion = {
+        'hotel_id' : session_get('h_id'),
+        'client_id' : session_get('user_id'),
+        'room_id' : session_get('r_id'),
+        'price' : session_get('r_price'),
+        'checkin' : session_get('checkin'),
+        'checkout' : session_get('checkout')
+    }
+    db.create_reservation(reservartion)
+
 def session_set(array):
     for key in array:
         session[key] = array[key]
@@ -38,7 +49,7 @@ def session_get(key):
     if key in session:
         return session[key]
     else:
-        return "none"
+        return False
 
 def session_unset(array):
     for key in array:
@@ -59,6 +70,22 @@ def add_to_basket(request):
     }
     data = db.get_basket(basket)
     session_set(data)
+
+
+def add_hotel(request):
+    hotel = {
+        'title':request.form['name'],
+        'area':request.form['area'],
+        'address':request.form['address'],
+        'attributes':request.form['attributes'],
+        'vote':request.form['vote']
+    }
+    db.add_hotel(hotel)
+
+
+def delete_hotel(request):
+    hotel_id = request.args.get('id')
+    db.delete_hotel(hotel_id)
 
 
 def md5hasher(data):

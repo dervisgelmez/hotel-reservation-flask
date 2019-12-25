@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import date
 
 con = mysql.connector.connect(user='root', password='root', host='127.0.0.1', database='cinar')
 
@@ -46,6 +47,7 @@ def get_hotels(value, room="0"):
             'address' : row[3],
             'attributes' : row[4],
             'vote' : str(row[5]),
+            'img' : row[6],
             'rooms' : get_rooms(row[0], room)
         }
         hotels.append(hotel)
@@ -112,12 +114,12 @@ def get_basket(basket):
             'h_title': row[1],
             'h_address' : row[3],
             'h_attributes' : row[4],
+            'h_img': row[6]
         }
     data = hotel.copy()
     data.update(get_room_by_id(basket['room_id']))
     data.update(get_area_by_id(hotel['h_area_code']))
     return data
-
 
 
 def get_all_hotels():
@@ -136,3 +138,33 @@ def get_all_hotels():
         data.update(get_area_by_id(str(row[2])))
         hotels.append(data)
     return hotels
+
+def get_all_areas():
+    areas = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT * FROM area")
+    for row in c:
+        area = {
+            'id': str(row[0]),
+            'title': row[2]+", "+row[1]
+        }
+        areas.append(area)
+    return areas
+
+def add_hotel(hotel):
+    c = con.cursor()
+    record = [hotel['title'], hotel['area'], hotel['address'], hotel['attributes'], hotel['vote']]
+    c.execute("insert into hotel(title, area_code, address, hotel_attributes, vote) values(%s,%s,%s,%s,%s)", record)
+    con.commit()
+
+
+def delete_hotel(param):
+    c = con.cursor()
+    c.execute("Delete from hotel where id ='"+param+"'")
+    con.commit()
+
+def create_reservation(data):
+    c = con.cursor()
+    record = [data['hotel_id'], data['client_id'], data['room_id'], data['price'],'reservation',data['checkin'], data['checkout'], date.today()]
+    c.execute("insert into reservation(hotel_id, client_id, rooms_id, price, status, check_in_date, check_out_date, created_at) values(%s,%s,%s,%s,%s,%s,%s,%s)", record)
+    con.commit()

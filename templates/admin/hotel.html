@@ -1,6 +1,39 @@
 {% extends 'admin/base.html' %}
 {% block body %}
 
+    <form class="p-5" action="{{ url_for('add_hotel') }}" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Otel Adı</label>
+                <input type="text" name="name" class="form-control" id="inputEmail4" autocomplete="off">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputState">Konumu</label>
+                <select id="inputState" class="form-control" name="area">
+                    <option selected>Seçin...</option>
+                    {% for i in range(0,areas|length) %}
+                        <option value="{{ areas[i]['id'] }}">{{ areas[i]['title'] }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">Oy</label>
+                <input type="text" name="vote" class="form-control" id="inputEmail4" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAddress">Adresi</label>
+            <input type="text" name="address" class="form-control" id="inputAddress" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Özellikleri</label>
+            <input type="text" name="attributes" class="form-control" id="inputAddress2" autocomplete="off">
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+
+
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -24,9 +57,12 @@
                 <td>{{ hotels[i]['attributes'] }}</td>
                 <td>{{ hotels[i]['vote'] }}</td>
                 <th scope="col"><a href=""><i class="fa fa-pencil"></i></a></th>
-                <th scope="col"><a href=""><i class="fa fa-close"></i></a></th>
+                <th scope="col"><a href="{{ url_for('delete_hotel',id=hotels[i]['id']) }}"><i class="fa fa-close"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <hr>
+
 {% endblock %}
