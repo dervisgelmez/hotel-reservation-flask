@@ -82,7 +82,8 @@ def basket_clear():
 def create_reservation():
     if helper.session_get('basket'):
         helper.create_reservation()
-        return basket_clear()
+        basket_clear()
+        return user()
     else:
         return page_not_found(404)
 
@@ -92,14 +93,14 @@ def create_reservation():
 def admin():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
-        return index()
+        return page_not_found(404)
     return render_template("admin/index.html")
 
 @app.route("/admin/hotel")
 def a_hotel():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
-        return index()
+        return page_not_found(404)
     hotels = db.get_all_hotels()
     areas = db.get_all_areas()
     return render_template("admin/hotel.html", hotels = hotels, areas=areas)
@@ -108,7 +109,7 @@ def a_hotel():
 def a_reservation():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
-        return index()
+        return page_not_found(404)
     reservation = db.get_all_reservation()
     return render_template("admin/reservation.html", data=reservation)
 
@@ -116,7 +117,7 @@ def a_reservation():
 def a_users():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
-        return index()
+        return page_not_found(404)
     reservation = db.get_all_users()
     return render_template("admin/user.html", data=reservation)
 
@@ -125,7 +126,7 @@ def a_users():
 def add_hotel():
     roles = helper.session_get('user_roles')
     if (roles != "admin"):
-        return index()
+        return page_not_found(404)
     if request.method=='POST':
         helper.add_hotel(request)
         return a_hotel()

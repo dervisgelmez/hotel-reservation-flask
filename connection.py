@@ -14,7 +14,8 @@ def is_user(mail,password):
             'user_id': str(row[0]),
             'user_name':row[1]+" "+row[2],
             'user_email': row[4],
-            'user_roles': row[5]
+            'user_roles': row[5],
+            'user_bonus': str(row[6])
         }
     return user
 
@@ -99,8 +100,8 @@ def get_area_by_id(value):
 
 def create_user(user):
     c = con.cursor()
-    record = [user['fname'], user['lname'], user['pass'], user['email'],'user']
-    c.execute("insert into client(first_name, last_name, password, email, roles) values(%s,%s,%s,%s,%s)", record)
+    record = [user['fname'], user['lname'], user['pass'], user['email'],'user',0]
+    c.execute("insert into client(first_name, last_name, password, email, roles, bonus) values(%s,%s,%s,%s,%s,%s)", record)
     con.commit()
 
 def get_basket(basket):
@@ -174,10 +175,20 @@ def delete_reservation(param):
     c.execute("Delete from reservation where id ='"+param+"'")
     con.commit()
 
+def increment_user_bonus(value):
+    bonus = helper.session_get('user_bonus')
+    total = float(bonus) + float(value)*0.03
+    helper.session_set({'user_bonus':str(total)})
+    c = con.cursor(buffered=True)
+    c.execute("UPDATE client SET bonus='"+str(total)+"' WHERE id='"+helper.session_get('user_id')+"'")
+    con.commit()
+
+
 def create_reservation(data):
-    c = con.cursor()
+    c = con.cursor(buffered=True)
     record = [data['hotel_id'], data['client_id'], data['room_id'], data['price'],'reservation',data['checkin'], data['checkout'], date.today()]
     c.execute("insert into reservation(hotel_id, client_id, rooms_id, price, status, check_in_date, check_out_date, created_at) values(%s,%s,%s,%s,%s,%s,%s,%s)", record)
+    increment_user_bonus(data['price'])
     con.commit()
 
 def get_reservation_by_user(data):
