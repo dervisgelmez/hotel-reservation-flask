@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+{% block body %}
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">İsim</th>
+            <th scope="col">Soyisim</th>
+            <th scope="col">Email</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Düzenle</th>
+            <th scope="col">Sil</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0,data|length) %}
+            <tr>
+                <th scope="row">{{ data[i]['id'] }}</th>
+                <td>{{ data[i]['first_name'] }}</td>
+                <td>{{ data[i]['last_name'] }}</td>
+                <td>{{ data[i]['email'] }}</td>
+                <td>{{ data[i]['role'] }}</td>
+                <th scope="col"><a href=""><i class="fa fa-pencil"></i></a></th>
+                <th scope="col"><a href="{{ url_for('delete_user',id=data[i]['id']) }}"><i class="fa fa-close"></i></a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+{% endblock %}

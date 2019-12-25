@@ -88,6 +88,16 @@ def delete_hotel(request):
     db.delete_hotel(hotel_id)
 
 
+def delete_user(request):
+    hotel_id = request.args.get('id')
+    db.delete_user(hotel_id)
+
+
+def delete_reservation(request):
+    hotel_id = request.args.get('id')
+    db.delete_reservation(hotel_id)
+
+
 def md5hasher(data):
     md5hash = hashlib.md5()
     md5hash.update(data)

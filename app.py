@@ -15,7 +15,6 @@ def reservation():
     hotels = helper.find_reservation(request)
     return render_template("app/reservation.html", hotels=hotels)
 
-
 @app.route("/about")
 def about():
     return render_template("app/aboutus.html")
@@ -58,7 +57,20 @@ def add_to_basket():
 
 @app.route("/user")
 def user():
-    return render_template("app/contact.html")
+    if helper.session_get('login'):
+        data = db.get_reservation_by_user(helper.session_get('user_id'))
+        return render_template("app/user.html", data=data)
+    else:
+        return page_not_found(404)
+
+@app.route("/user/delete")
+def delete_account():
+    if helper.session_get('login'):
+        db.delete_account()
+        helper.session_clear()
+        return render_template("app/index.html")
+    else:
+        return page_not_found(404)
 
 @app.route("/basket-clear")
 def basket_clear():
@@ -92,6 +104,23 @@ def a_hotel():
     areas = db.get_all_areas()
     return render_template("admin/hotel.html", hotels = hotels, areas=areas)
 
+@app.route("/admin/reservation")
+def a_reservation():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    reservation = db.get_all_reservation()
+    return render_template("admin/reservation.html", data=reservation)
+
+@app.route("/admin/users")
+def a_users():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    reservation = db.get_all_users()
+    return render_template("admin/user.html", data=reservation)
+
+
 @app.route("/admin/hotel", methods=['POST'])
 def add_hotel():
     roles = helper.session_get('user_roles')
@@ -110,6 +139,22 @@ def delete_hotel():
         return index()
     helper.delete_hotel(request)
     return a_hotel()
+
+@app.route("/admin/user/delete")
+def delete_user():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    helper.delete_user(request)
+    return a_users()
+
+@app.route("/admin/reservation/delete")
+def delete_reservation():
+    roles = helper.session_get('user_roles')
+    if (roles != "admin"):
+        return index()
+    helper.delete_reservation(request)
+    return a_reservation()
 
 @app.errorhandler(404)
 def page_not_found(error):

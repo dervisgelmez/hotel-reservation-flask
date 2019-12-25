@@ -1,5 +1,6 @@
 import mysql.connector
 from datetime import date
+import helper
 
 con = mysql.connector.connect(user='root', password='root', host='127.0.0.1', database='cinar')
 
@@ -163,8 +164,71 @@ def delete_hotel(param):
     c.execute("Delete from hotel where id ='"+param+"'")
     con.commit()
 
+def delete_user(param):
+    c = con.cursor()
+    c.execute("Delete from client where id ='"+param+"'")
+    con.commit()
+
+def delete_reservation(param):
+    c = con.cursor()
+    c.execute("Delete from reservation where id ='"+param+"'")
+    con.commit()
+
 def create_reservation(data):
     c = con.cursor()
     record = [data['hotel_id'], data['client_id'], data['room_id'], data['price'],'reservation',data['checkin'], data['checkout'], date.today()]
     c.execute("insert into reservation(hotel_id, client_id, rooms_id, price, status, check_in_date, check_out_date, created_at) values(%s,%s,%s,%s,%s,%s,%s,%s)", record)
     con.commit()
+
+def get_reservation_by_user(data):
+    reservations = []
+    c = con.cursor()
+    c.execute("SELECT * FROM reservation r LEFT JOIN hotel h ON r.hotel_id=h.id WHERE r.client_id='"+data+"'")
+    for row in c:
+        reservation = {
+            'id': str(row[0]),
+            'name': row[10],
+            'price': row[4],
+            'date': row[8]
+        }
+        reservations.append(reservation)
+    return reservations
+
+def delete_account():
+    param = helper.session_get('user_id')
+    c = con.cursor()
+    c.execute("Delete from client where id ='"+param+"'")
+    con.commit()
+
+def get_all_reservation():
+    reservations = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT * FROM reservation r LEFT JOIN hotel h ON r.hotel_id=h.id LEFT JOIN client c ON c.id=r.client_id LEFT JOIN room rm ON rm.id=r.rooms_id")
+    for row in c:
+        reservation = {
+            'id': str(row[0]),
+            'name': row[10],
+            'type': row[25],
+            'client': row[17]+" "+row[18],
+            'price':row[4]
+
+        }
+        reservations.append(reservation)
+    return reservations
+
+def get_all_users():
+    users = []
+    c = con.cursor(buffered=True)
+    c.execute("SELECT * FROM client")
+    for row in c:
+        user = {
+            'id': str(row[0]),
+            'first_name': row[1],
+            'last_name': row[2],
+            'email': row[4],
+            'role': row[5],
+        }
+        users.append(user)
+    return users
+
+

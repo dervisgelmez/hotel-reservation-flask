@@ -1,0 +1,32 @@
+{% extends 'admin/base.html' %}
+{% block body %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Otel Adı</th>
+            <th scope="col">Oda Tipi</th>
+            <th scope="col">Müşteri Adı</th>
+            <th scope="col">Ödenen Ücret</th>
+            <th scope="col">Düzenle</th>
+            <th scope="col">Sil</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0,data|length) %}
+            <tr>
+                <th scope="row">{{ data[i]['id'] }}</th>
+                <td>{{ data[i]['name'] }}</td>
+                <td>{{ data[i]['type'] }}</td>
+                <td>{{ data[i]['client'] }}</td>
+                <td>{{ data[i]['price'] }}</td>
+                <th scope="col"><a href=""><i class="fa fa-pencil"></i></a></th>
+                <th scope="col"><a href="{{ url_for('delete_reservation',id=data[i]['id']) }}"><i class="fa fa-close"></i></a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+{% endblock %}

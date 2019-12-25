@@ -41,7 +41,6 @@
 
 
                 <div class="blog_left_sidebar">
-                    {% include 'app/sections/credit-card.html' %}
                 </div>
 
             </div>
@@ -57,7 +56,7 @@
                     <aside class="single_sidebar_widget author_widget">
                         <h4 class="text-left">5 günlük rezervasyon ücreti</h4>
                         <br>
-                        <h2>250 ₺</h2>
+                        <h2>{{session.price}} ₺</h2>
                     </aside>
                     <div class="br"></div>
                     <aside class="single_sidebar_widget author_widget">

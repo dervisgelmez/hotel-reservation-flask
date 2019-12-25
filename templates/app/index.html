@@ -9,7 +9,11 @@
             </div>
         </div>
     </section>
+    {% if alert %}
+        <script>
+            alert("{{ alert['message'] }}");
+        </script>
+    {% endif %}
     {% include 'app/sections/about-us.html' %}
     {% include 'app/sections/review.html' %}
-    {% include 'app/sections/blog.html' %}
 {% endblock %}
